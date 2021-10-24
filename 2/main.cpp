@@ -19,6 +19,8 @@ public:
 };
 
 int main(int argc, char *argv[]) {
+    clock_t start, stop;
+    start = clock();
     std::ios_base::sync_with_stdio(false);
 
     std::string inputFile = argv[1];
@@ -46,4 +48,6 @@ int main(int argc, char *argv[]) {
         container.set(i, nullptr);
     }
     outputStream.close();
+    stop = clock();
+    printf("Time elapsed %f s", double(stop - start) / CLOCKS_PER_SEC);
 }
