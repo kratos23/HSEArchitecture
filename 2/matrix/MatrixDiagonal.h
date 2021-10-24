@@ -14,7 +14,7 @@ public:
 
     MatrixDiagonal &operator=(const MatrixDiagonal &other);
 
-    virtual ~MatrixDiagonal();
+    ~MatrixDiagonal() override;
 
     double get(int i, int j) override;
 

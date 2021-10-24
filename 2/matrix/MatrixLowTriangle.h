@@ -11,7 +11,7 @@ public:
 
     MatrixLowTriangle &operator=(const MatrixLowTriangle &other);
 
-    virtual ~MatrixLowTriangle();
+    ~MatrixLowTriangle() override;
 
     double get(int i, int j) override;
 

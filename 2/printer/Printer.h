@@ -8,6 +8,7 @@
 class Printer {
 public:
     void print(Matrix *matrix);
+    void printCount(int count);
     Printer(std::vector<std::ostream*> _outputStreams);
 
 private:

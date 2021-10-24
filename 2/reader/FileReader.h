@@ -26,7 +26,7 @@ public:
 private:
     static inline const std::string RAW_INPUT_TYPE = "raw";
     static inline const std::string RANDOM_INPUT_TYPE = "random";
-    static inline const int MAX_RANDOM_MATRIX_SIZE = 20;
+    static inline const int MAX_RANDOM_MATRIX_SIZE = 10;
 
     static inline const std::string DIAGONAL_MATRIX_TYPE = "diagonal";
     static inline const std::string LOW_TRIANGLE_MATRIX_TYPE = "low_triangle";

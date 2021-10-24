@@ -9,7 +9,7 @@ public:
 
     Matrix2D(const Matrix2D &other);
 
-    virtual ~Matrix2D();
+    ~Matrix2D() override;
 
     Matrix2D &operator=(const Matrix2D &other);
 

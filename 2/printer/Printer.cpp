@@ -1,7 +1,3 @@
-//
-// Created by user on 24.10.2021.
-//
-
 #include "Printer.h"
 
 #include <utility>
@@ -22,5 +18,11 @@ void Printer::printTo(Matrix *matrix, std::ostream *ostream) {
 void Printer::print(Matrix *matrix) {
     for (auto ostream: outputStreams) {
         printTo(matrix, ostream);
+    }
+}
+
+void Printer::printCount(int count) {
+    for (auto ostream: outputStreams) {
+        *ostream << "Count in container " << count << "\n";
     }
 }
