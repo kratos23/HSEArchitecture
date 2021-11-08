@@ -43,8 +43,6 @@ class FileReader(object):
         random_key = int(input_stream.readline())
         random.seed(random_key)
 
-        input_stream.readline()
-
         count = int(input_stream.readline())
         generators = [
             generator.Matrix2DGenerator(),

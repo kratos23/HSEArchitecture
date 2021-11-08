@@ -1,2 +1,3 @@
-random 23
-count 100
+random
+23
+100
