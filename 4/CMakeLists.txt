@@ -11,7 +11,7 @@ set(
         main.c generator/generator.c matrix/matrix.c container/container.asm
         reader/reader.c)
 
-set(CMAKE_ASM_FLAGS "${CFLAGS} -x assembler-with-cpp ")
+set(CMAKE_ASM_FLAGS "${CFLAGS} -x assembler-with-cpp -F dwarf")
 SET(CMAKE_C_FLAGS  "${CMAKE_CXX_FLAGS} -no-pie")
 
 add_executable(4 ${PROJECT_SOURCES} ${PROJECT_HEADERS})

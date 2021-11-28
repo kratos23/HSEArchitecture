@@ -1,4 +1,5 @@
 #include "generator.h"
+#include "../matrix/matrix.h"
 #include <stdlib.h>
 #include <assert.h>
 
@@ -46,17 +47,24 @@ void generateMatricesTo(int matrixCount, Container *container) {
     static const int MATRIX_TYPES_COUNT = 3;
     for (int i = 0; i < matrixCount; i++) {
         switch (rand() % MATRIX_TYPES_COUNT) {
-            case 0:
-                addContainer(container, generateRandomMatrix2d());
+            case 0: {
+                Matrix m = generateRandomMatrix2d();
+                addContainer(container, &m);
                 break;
-            case 1:
-                addContainer(container, generateRandomMatrixDiagonal());
+            }
+            case 1: {
+                Matrix m = generateRandomMatrixDiagonal();
+                addContainer(container, &m);
                 break;
-            case 2:
-                addContainer(container, generateRandomMatrixLowTriangle());
+            }
+            case 2: {
+                Matrix m = generateRandomMatrixLowTriangle();
+                addContainer(container, &m);
                 break;
-            default:
+            }
+            default: {
                 assert(0);
+            }
         }
     }
 }

@@ -6,11 +6,11 @@
 struct ContainerTag;
 
 typedef struct ContainerTag {
-    Matrix data[10005];
     int size;
+    Matrix data[10005];
 } Container;
 
-extern void addContainer(Container *containerPtr, Matrix matrix);
+extern void addContainer(Container *containerPtr, Matrix *matrix);
 
 extern void sortContainer(Container *containerPtr);
 

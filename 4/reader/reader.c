@@ -60,11 +60,14 @@ void readToRaw(FILE *file, Container *container) {
         char matrixType[MATRIX_TYPE_MAX_LENGTH];
         fscanf(file, "%s", matrixType);
         if (strcmp(matrixType, TWO_DIMENSIONS_MATRIX_TYPE) == 0) {
-            addContainer(container, readMatrix2d(file));
+            Matrix m = readMatrix2d(file);
+            addContainer(container, &m);
         } else if (strcmp(matrixType, LOW_TRIANGLE_MATRIX_TYPE) == 0) {
-            addContainer(container, readMatrixLowTriangle(file));
+            Matrix m = readMatrixLowTriangle(file);
+            addContainer(container, &m);
         } else if (strcmp(matrixType, DIAGONAL_MATRIX_TYPE) == 0) {
-            addContainer(container, readMatrixDiagonal(file));
+            Matrix m = readMatrixDiagonal(file);
+            addContainer(container, &m);
         }
     }
 }
