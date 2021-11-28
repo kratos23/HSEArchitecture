@@ -1,9 +1,5 @@
 ; container.asm
 section .data
-    sizeOfMatrix dd 16
-    containerDataLen dd 10005
-    containerOffset dq 8
-
 section .bss
 section .text
     global addContainer
@@ -13,6 +9,12 @@ addContainer:
     ; INPUT
     ;   Container *containerPtr stored in rdi
     ;   Matrix *matrix stored in rsi
+    push rbp
+    mov rbp, rsp
+
+    push rax
+    push rcx
+    push rdx
 
     mov edx, [rdi] ; edx <- container.size
 
@@ -30,8 +32,52 @@ addContainer:
     inc edx
     mov [rdi], edx
 
+    pop rdx
+    pop rcx
+    pop rax
+
+    leave
     ret
 
 sortContainer:
     ret
 
+average2D:
+    ret
+
+averageDiagonal: ; average will be stored in xmm0
+    ; INPUT
+    ; Matrix *matrix2d stored in rdi
+    push rbp
+    mov rbp, rsp
+
+    push rbx
+    push rdx
+
+    xorps xmm1, xmm1
+    mov ebx, [rdi + 4] ; ebx = matrix.size
+    mov rdx, [rdi + 8] ; rdx = matrix.ptr
+    mov rdx, [rdx] ; rdx = matrix.ptr.data
+
+    xor eax, eax
+
+loop1:
+    addsd xmm1, [rdx]
+    add rdx, 8
+    inc eax
+    cmp eax, ebx
+    jl loop1
+    ;loop 1 end
+
+    cvtsi2sd xmm2, ebx
+    divsd xmm1, xmm2
+    divsd xmm1, xmm2
+    movsd xmm0, xmm1
+
+    pop rdx
+    pop rbx
+    leave
+    ret
+
+averageLowTriangle:
+    ret
