@@ -79,5 +79,46 @@ loop1:
     leave
     ret
 
-averageLowTriangle:
+averageLowTriangle: ; average will be stored in xmm0
+    ; INPUT
+    ; Matrix *matrix2d stored in rdi
+    push rbp
+    mov rbp, rsp
+
+    push rbx
+    push rdx
+    push rcx
+
+    xorps xmm1, xmm1
+    mov ebx, [rdi + 4] ; ebx = matrix.size
+    mov rdx, [rdi + 8] ; rdx = matrix.ptr
+    mov rdx, [rdx] ; rdx = matrix.ptr.data
+
+    mov eax, ebx
+    inc ebx
+    push rdx
+    mul ebx ; rdx:rax = eax * ebx
+    pop rdx
+    dec ebx
+    shr eax, 1 ; now eax = (matrix.size * (matrix.size + 1)) / 2
+
+    xor ecx, ecx
+
+loop2:
+    addsd xmm1, [rdx]
+    add rdx, 8
+    inc ecx
+    cmp ecx, eax
+    jl loop2
+    ;loop 2 end
+
+    cvtsi2sd xmm2, ebx
+    divsd xmm1, xmm2
+    divsd xmm1, xmm2
+    movsd xmm0, xmm1
+
+    pop rcx
+    pop rdx
+    pop rbx
+    leave
     ret
