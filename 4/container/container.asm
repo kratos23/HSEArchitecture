@@ -42,7 +42,51 @@ addContainer:
 sortContainer:
     ret
 
-average2D:
+average2D: ; average will be stored in xmm0
+    ; INPUT
+    ; Matrix *matrix2d stored in rdi
+    push rbp
+    mov rbp, rsp
+
+    push rbx
+    push rdx
+    push r12
+
+    xorps xmm1, xmm1
+    mov ebx, [rdi + 4] ; ebx = matrix.size
+    mov rdx, [rdi + 8] ; rdx = matrix.ptr
+    mov rdx, [rdx] ; rdx = matrix.ptr.data*
+
+    xor ecx, ecx
+
+loopOuter:
+    xor eax, eax
+    mov r12, [rdx]
+
+loopInner:
+    addsd xmm1, [r12]
+    add r12, 8
+    inc eax
+    cmp eax, ebx
+    jl loopInner
+
+;loopInner end
+    add rdx, 8
+    inc ecx
+    cmp ecx, ebx
+    jl loopOuter
+;loopOuter end
+
+    cvtsi2sd xmm2, ebx
+    divsd xmm1, xmm2
+    divsd xmm1, xmm2
+    movsd xmm0, xmm1
+
+    pop r12
+    pop rdx
+    pop rbx
+
+    leave
     ret
 
 averageDiagonal: ; average will be stored in xmm0
