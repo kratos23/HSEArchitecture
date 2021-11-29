@@ -18,13 +18,12 @@ typedef struct MatrixLowTriangleTag {
     double *data;
 } MatrixLowTriangle;
 
-typedef struct MatrixTag {
-    enum {
-        MATRIX_TAG_2D,
-        MATRIX_TAG_DIAGONAL,
-        MATRIX_TAG_LOW_TRIANGLE
-    } tag;
+#define MATRIX_TAG_2D 1
+#define MATRIX_TAG_DIAGONAL 2
+#define MATRIX_TAG_LOW_TRIANGLE 3
 
+typedef struct MatrixTag {
+    int tag;
     int size;
     union {
         Matrix2D *matrix2dPtr;

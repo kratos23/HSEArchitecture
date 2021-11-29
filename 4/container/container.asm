@@ -1,5 +1,8 @@
 ; container.asm
 section .data
+    matrixTag2d dd 1
+    matrixTagDiagonal dd 2
+    matrixTagLowTriangle dd 3
 section .bss
 section .text
     global addContainer
@@ -40,6 +43,62 @@ addContainer:
     ret
 
 sortContainer:
+    ret
+
+average: ;average will be stored in xmm0
+    ; INPUT
+    ; Matrix *matrix2d stored in rdi
+    push rbp
+    mov rbp, rsp
+
+    push rbx
+    push rcx
+
+    mov ebx, [rdi] ; ebx = matrix.tag
+
+    mov ecx, [matrixTag2d]
+    cmp ecx, ebx
+    je average2DCall
+    jmp check2
+
+average2DCall:
+    call average2D
+    pop rcx
+    pop rbx
+    leave
+    ret
+
+check2:
+    mov ecx, [matrixTagDiagonal]
+    cmp ecx, ebx
+    je averageDiagonalCall
+    jmp check3
+
+averageDiagonalCall:
+    call averageDiagonal
+    pop rcx
+    pop rbx
+    leave
+    ret
+
+check3:
+    mov ecx, [matrixTagLowTriangle]
+    cmp ecx, ebx
+    je averageLowTriangleCall
+    jmp averageEnd
+
+averageLowTriangleCall:
+    call averageLowTriangle
+    pop rcx
+    pop rbx
+    leave
+    ret
+
+averageEnd:
+
+    pop rcx
+    pop rbx
+    leave
     ret
 
 average2D: ; average will be stored in xmm0
