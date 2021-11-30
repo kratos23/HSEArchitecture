@@ -3,11 +3,11 @@
 #include <stdlib.h>
 #include <assert.h>
 
-const double MAX_ABSOLUTE_MATRIX_VALUE = 1e9;
+const double MAX_ABSOLUTE_MATRIX_VALUE = 1e3;
 const int MAX_RANDOM_MATRIX_SIZE = 10;
 
 int generateRandomMatrixSize() {
-    return rand() % MAX_RANDOM_MATRIX_SIZE;
+    return rand() % MAX_RANDOM_MATRIX_SIZE + 1;
 }
 
 double generateRandomMatrixValue() {

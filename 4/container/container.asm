@@ -8,6 +8,92 @@ section .text
     global addContainer
     global sortContainer
 
+sortContainer:
+    ; INPUT
+    ; Container *containerPtr stored in rdi
+    push rbp
+    mov rbp, rsp
+
+    push rbx
+    push rcx
+    push rdx
+
+    mov ebx, [rdi]; ebx <- container.size
+    mov r15d, [rdi]
+    dec r15d
+    lea rcx, [rdi + 8]; rcx is container[i]
+
+xor r8d, r8d
+sortOuterLoop:
+    mov edx, r8d
+    inc edx ; edx = rd8d + 1
+    lea r12, [rcx + 16] ; r12 is container[j]
+
+    ;calculating avg of container[i]
+    push rdi
+    mov rdi, rcx
+    call average
+    movsd xmm3, xmm0
+    pop rdi
+
+sortInnerLoop:
+    push rdi
+    mov rdi, r12
+    call average
+    movsd xmm4, xmm0
+    pop rdi
+
+    comisd xmm3, xmm4
+    ja swap
+    jmp afterSwap
+
+swap: ;here we need to swap r12 : r12+16 with rcx : rcx+16
+
+    ;making a copy of r12
+    mov r13, [r12]
+    mov r14, [r12 + 8]
+
+    ;[r12]<-rcx
+    mov r9, [rcx]
+    mov [r12], r9
+    mov r9, [rcx + 8]
+    mov [r12 + 8], r9
+
+    ;rcx<-copy of r12(r13, r14)
+    mov [rcx], r13
+    mov [rcx + 8], r14
+
+    ; recalculation of container[i] average
+    push rdi
+    mov rdi, rcx
+    call average
+    movsd xmm3, xmm0
+    pop rdi
+
+
+afterSwap:
+    inc edx
+    add r12, 16
+    cmp edx, ebx
+    jl sortInnerLoop
+
+;sortInnerLoopEnd
+
+    inc r8d
+    add rcx, 16
+    cmp r8d, r15d
+    jl sortOuterLoop
+
+;sortOuterLoop end
+
+    pop rcx
+    pop rbx
+    pop rdx
+
+    leave
+    ret
+
+
 addContainer:
     ; INPUT
     ;   Container *containerPtr stored in rdi
@@ -40,9 +126,6 @@ addContainer:
     pop rax
 
     leave
-    ret
-
-sortContainer:
     ret
 
 average: ;average will be stored in xmm0
